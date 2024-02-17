@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node_modules\\.bin\\proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=.\\proto .\\mailer.proto",
-    "dev": "ts-node src\\server.ts"
+    "build": "node_modules/.bin/proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=./proto ./mailer.proto",
+    "dev": "ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",

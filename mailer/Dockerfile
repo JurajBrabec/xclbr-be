@@ -5,4 +5,4 @@ WORKDIR /usr/src/app/mailer
 RUN npm install
 RUN npm run build
 EXPOSE 50051
-CMD [ "ts-node", "src/server.js" ]
+CMD [ "npm", "run" , "dev" ]

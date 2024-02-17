@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "ts-node src\\client.ts"
+    "dev": "ts-node src/client.ts"
   },
   "dependencies": {
     "@types/node": "^20.11.19",
