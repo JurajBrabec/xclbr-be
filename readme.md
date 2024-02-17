@@ -13,3 +13,9 @@ npm install --save-dev @types/ini @types/nodemailer @types/pug
 API
 npm install express
 npm install --save-dev @types/express
+
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/JurajBrabec/xclbr.git
+git push -u origin main
