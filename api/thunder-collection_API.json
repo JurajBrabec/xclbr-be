@@ -1,0 +1,28 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "API",
+    "dateExported": "2024-02-17T15:50:31.405Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "3bc6a8d7-cba6-498b-aa25-daff59cb518a",
+            "colId": "7e339472-37fd-497e-900d-244fb9e6d178",
+            "containerId": "",
+            "name": "localhost:3000/api/v1/mail",
+            "url": "localhost:3000/api/v1/mail",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-02-17T15:50:10.138Z",
+            "modified": "2024-02-17T15:50:10.138Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"to\": \"juraj@xclbr.com\",\n  \"subject\": \"API TEST\",\n  \"body\": \"Test\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

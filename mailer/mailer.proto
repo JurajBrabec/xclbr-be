@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mailer;
+
+service Mailer {
+  rpc SendMail(Params) returns (Result) {}
+}
+
+message Params {
+  string to = 1;
+  string subject = 2;
+  string body = 3;
+}
+
+message Result {
+  bool error = 1;
+  string message = 2;
+}
