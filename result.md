@@ -1,3 +1,5 @@
+Output
+```sh
 ubuntu@docker:~/containers/xclbr-be$ docker compose up
 [+] Running 3/3
 ✔ Network xclbr-be_default Created 0.1s
@@ -14,3 +16,4 @@ xclbr-api | > ts-node src/client.ts
 xclbr-api |
 xclbr-mailer | Listening on port: 50051
 xclbr-api | REST API listening on port 3000
+```
