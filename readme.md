@@ -20,11 +20,10 @@ git commit -m "initial commit"
 git remote add origin https://github.com/JurajBrabec/xclbr.git
 git push -u origin main
 
-mkdir be
-git clone https://<token>@github.com/JurajBrabec/xclbr-be.git .
-cd be/mailer
-sudo docker build --tag 'xclbr-mailer' .
+git clone https://<token>@github.com/JurajBrabec/xclbr-be.git
+cd xclbr-be
+sudo docker build --tag 'xclbr-mailer' -f mailer/Dockerfile .
 sudo docker run -d xclbr-mailer
-cd ../api
-sudo docker build --tag 'xclbr-api' .
+
+docker build --tag xclbr-api -f api/Dockerfile .
 sudo docker run -d xclbr-api
