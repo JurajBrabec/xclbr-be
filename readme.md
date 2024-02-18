@@ -1,4 +1,5 @@
-\*\* Run
+How to run
+```sh
 git clone https://<token>@github.com/JurajBrabec/xclbr-be.git
 cd xclbr-be
 bash build-images.sh
@@ -9,3 +10,4 @@ bash start-containers.sh
 #sudo docker run -d --name xclbr-api -p 3000:3000 xclbr-api:latest
 #OR
 #docker compose up -d
+```
