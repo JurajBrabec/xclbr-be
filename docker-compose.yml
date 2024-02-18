@@ -1,0 +1,19 @@
+services:
+  xclbr-mailer:
+    build:
+      context: ./mailer
+    container_name: xclbr-mailer
+    ports:
+      - 50051:50051
+    image: xclbr-mailer:latest
+    restart: unless-stopped
+  xclbr-api:
+    build:
+      context: ./api
+    container_name: xclbr-api
+    env:
+      - MAILER_ADDR=xclbr-mailer:50051
+    ports:
+      - 3000:3000
+    image: xclbr-api:latest
+    restart: unless-stopped

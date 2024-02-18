@@ -1,7 +1,7 @@
 import { Params, getClient, sendMail } from '../../mailer/src/client';
 import { getApp } from './express';
 
-const MAILER_ADDR = '0.0.0.0:50051';
+const MAILER_ADDR = process.env.MAILER_ADDR || '0.0.0.0:50051';
 const PORT = 3000;
 
 const client = getClient(MAILER_ADDR);
