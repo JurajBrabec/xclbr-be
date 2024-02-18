@@ -11,7 +11,7 @@ services:
     build:
       context: ./api
     container_name: xclbr-api
-    env:
+    environment:
       - MAILER_ADDR=xclbr-mailer:50051
     ports:
       - 3000:3000
