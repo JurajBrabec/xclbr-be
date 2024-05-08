@@ -1,4 +1,4 @@
-CREATE DATABASE xclbr;
+CREATE DATABASE IF NOT EXISTS xclbr;
 
 USE xclbr;
 
