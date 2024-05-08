@@ -1,4 +1,4 @@
-const url = process.env.API_ENDPOINT || 'http://xclbr-api:3000/api/v1/users';
+const url = 'http://xclbr-api:3000/api/v1/users';
 function callApi() {
   fetch(url)
     .then((response) => response.text())
