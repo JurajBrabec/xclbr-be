@@ -1,7 +1,7 @@
 function callApi() {
   const url = document.getElementById('url').value;
   console.log(url);
-  fetch(url)
+  fetch(url, { mode: 'cors' })
     .then((response) => response.text())
     .then((result) => {
       const resultDiv = document.createElement('div');
