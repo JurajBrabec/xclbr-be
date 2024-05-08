@@ -1,5 +1,6 @@
+const url = process.env.API_ENDPOINT || 'http://xclbr-api:3000/api/v1/users';
 function callApi() {
-  fetch('xclbr-api:3000/api/v1/users')
+  fetch(url)
     .then((response) => response.text())
     .then((result) => {
       const resultDiv = document.createElement('div');
