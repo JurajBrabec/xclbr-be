@@ -13,7 +13,8 @@ function callApi() {
 const input = document.createElement('input');
 input.id = 'url';
 input.type = 'text';
-input.value = 'http://xclbr-api:3000/api/v1/users';
+input.value =
+  'https://xclbr-api-juraj-brabec-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/users';
 document.body.appendChild(input);
 const button = document.createElement('button');
 button.textContent = 'Call API';
