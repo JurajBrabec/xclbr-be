@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Params } from '../../mailer/src/client';
+import getUsers from './mysql';
 
 export const getApp = (validator: (params: Params) => boolean) => {
   const app = express();
@@ -17,5 +18,6 @@ export const getApp = (validator: (params: Params) => boolean) => {
     }
   });
 
+  app.get('/api/v1/users', getUsers);
   return app;
 };
