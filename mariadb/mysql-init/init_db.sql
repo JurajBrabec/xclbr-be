@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS xclbr;
 
+GRANT ALL PRIVILEGES ON xclbr.* TO 'xclbr'@'localhost';
+
 USE xclbr;
 
 CREATE TABLE users (
