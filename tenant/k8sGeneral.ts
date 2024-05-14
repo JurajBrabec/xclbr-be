@@ -1,4 +1,4 @@
-import k8s from '@kubernetes/client-node';
+import * as k8s from '@kubernetes/client-node';
 
 export type K8sGeneralOptions = {
   url: string;
@@ -47,7 +47,6 @@ export class K8sGeneral {
     const { url, namespace, user, accessToken } = options;
 
     const k8sConfig = new k8s.KubeConfig();
-
     k8sConfig.loadFromOptions({
       clusters: [
         {

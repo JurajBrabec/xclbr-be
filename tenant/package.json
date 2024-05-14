@@ -1,0 +1,21 @@
+{
+  "name": "tenant-provisioner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "dev": "ts-node main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.21.0",
+    "axios": "^1.6.8"
+  }
+}

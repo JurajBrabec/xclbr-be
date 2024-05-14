@@ -1,9 +1,0 @@
-{
-  "devDependencies": {
-    "@types/node": "^20.12.11"
-  },
-  "dependencies": {
-    "@kubernetes/client-node": "^0.21.0",
-    "axios": "^1.6.8"
-  }
-}
