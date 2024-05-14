@@ -11,11 +11,13 @@ export type K8sDeploymentPorts = {
   containerPort: number;
   protocol: 'TCP' | 'UDP';
 }[];
+
 export type K8sDeploymentVolumeMounts = {
   name: string;
   mountPath: string;
   subPath: string;
 }[];
+
 export type K8sDeploymentVolumes = {
   name: string;
   persistentVolumeClaim: { claimName: string };
@@ -36,6 +38,7 @@ export class K8sGeneral {
 
     this.k8sWatch = new k8s.Watch(k8sConfig);
   }
+
   private createK8sConfig(
     options: K8sGeneralOptions,
     cluster: string = 'lab',
@@ -73,16 +76,13 @@ export class K8sGeneral {
 
     return k8sConfig;
   }
+
   async listNamespaces(): Promise<string[]> {
     const namespaces: string[] = [];
 
-    try {
-      const response = await this.k8sCoreClient.listNamespace();
-      for (const namespace of response.body.items) {
-        namespaces.push(namespace.metadata?.name || '');
-      }
-    } catch (error) {
-      //      throw new Error('Failed to list namespaces: ' + error);
+    const response = await this.k8sCoreClient.listNamespace();
+    for (const namespace of response.body.items) {
+      namespaces.push(namespace.metadata?.name || '');
     }
 
     return namespaces;
@@ -113,6 +113,7 @@ export class K8sGeneral {
                 }
                 break;
               default:
+                console.log(`unknown kind: ${apiObj.kind}`);
                 break;
             }
           } else if (phase === 'MODIFIED') {
@@ -126,6 +127,7 @@ export class K8sGeneral {
                 }
                 break;
               default:
+                console.log(`unknown kind: ${apiObj.kind}`);
                 break;
             }
           } else if (phase === 'DELETED') {
@@ -141,6 +143,7 @@ export class K8sGeneral {
                 }
                 break;
               default:
+                console.log(`unknown kind: ${apiObj.kind}`);
                 break;
             }
           } else {
@@ -154,6 +157,7 @@ export class K8sGeneral {
       );
     });
   }
+
   async checkAutoScalerExists(
     namespace: string,
     name: string
@@ -172,6 +176,7 @@ export class K8sGeneral {
 
     return false;
   }
+
   createAutoScalerConfig(name: string): k8s.V2HorizontalPodAutoscaler {
     return {
       apiVersion: 'autoscaling/v2',
@@ -215,9 +220,12 @@ export class K8sGeneral {
     namespace: string,
     config: k8s.V2HorizontalPodAutoscaler
   ): Promise<void> {
-    const name = config.metadata?.name;
-    console.log('Creating autoscaler:', name);
     try {
+      if (!config.metadata?.name) {
+        throw new Error('No namespace provided');
+      }
+      const name = config.metadata.name;
+      console.log('Creating autoscaler:', name);
       await this.k8sAutoscalingClient.createNamespacedHorizontalPodAutoscaler(
         namespace,
         config
@@ -235,9 +243,10 @@ export class K8sGeneral {
       console.log('Autoscaler NOT created:', error);
     }
   }
+
   async deleteAutoScaler(namespace: string, name: string): Promise<void> {
-    console.log('Deleting autoscaler:', name);
     try {
+      console.log('Deleting autoscaler:', name);
       await this.k8sAutoscalingClient.deleteNamespacedHorizontalPodAutoscaler(
         name,
         namespace
@@ -277,9 +286,9 @@ export class K8sGeneral {
     name: string,
     app: string,
     image: string,
-    ports: any[],
-    volumeMounts: any[] = [],
-    volumes: any[] = []
+    ports: K8sDeploymentPorts,
+    volumeMounts: K8sDeploymentVolumeMounts = [],
+    volumes: K8sDeploymentVolumes = []
   ): k8s.V1Deployment {
     return {
       kind: 'Deployment',
@@ -329,13 +338,17 @@ export class K8sGeneral {
       },
     };
   }
+
   async createDeployment(
     namespace: string,
     config: k8s.V1Deployment
   ): Promise<void> {
-    const name = config.metadata?.name;
-    console.log('Creating deployment:', name);
     try {
+      if (!config.metadata?.name) {
+        throw new Error('No namespace provided');
+      }
+      const name = config.metadata.name;
+      console.log('Creating deployment:', name);
       await this.k8sAppsClient.createNamespacedDeployment(namespace, config);
       console.log('Deployment creation request submitted');
       await this.watcher(
@@ -350,9 +363,10 @@ export class K8sGeneral {
       console.log('Deployment NOT created:', error);
     }
   }
+
   async deleteDeployment(namespace: string, name: string): Promise<void> {
-    console.log('Deleting deployment:', name);
     try {
+      console.log('Deleting deployment:', name);
       await this.k8sAppsClient.deleteNamespacedDeployment(name, namespace);
       console.log('Deployment deletion request submitted');
       await this.watcher(
@@ -413,10 +427,14 @@ export class K8sGeneral {
       },
     };
   }
+
   async createService(namespace: string, config: k8s.V1Service): Promise<void> {
-    const name = config.metadata?.name;
-    console.log('Creating service:', name);
     try {
+      if (!config.metadata?.name) {
+        throw new Error('No namespace provided');
+      }
+      const name = config.metadata.name;
+      console.log('Creating service:', name);
       await this.k8sCoreClient.createNamespacedService(namespace, config);
       console.log('Service creation request submitted');
       await this.watcher(
@@ -431,9 +449,10 @@ export class K8sGeneral {
       console.log('Service NOT created:', error);
     }
   }
+
   async deleteService(namespace: string, name: string): Promise<void> {
-    console.log('Deleting service:', name);
     try {
+      console.log('Deleting service:', name);
       await this.k8sCoreClient.deleteNamespacedService(name, namespace);
       console.log('Service deletion request submitted');
       await this.watcher(

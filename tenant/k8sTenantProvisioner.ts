@@ -7,6 +7,7 @@ import {
 } from './k8sGeneral';
 
 export type K8sTenantProvisionerOptions = K8sGeneralOptions;
+
 export class K8sTenantProvisioner extends K8sGeneral {
   constructor(options: K8sGeneralOptions) {
     super(options);
@@ -15,9 +16,11 @@ export class K8sTenantProvisioner extends K8sGeneral {
   private getPAMAutoScalerName(tenantID: number): string {
     return `${this.getPAMDeploymentName(tenantID)}-autoscaler`;
   }
+
   private getGuacdAutoScalerName(tenantID: number): string {
     return `${this.getGuacdDeploymentName(tenantID)}-autoscaler`;
   }
+
   private getPAMServiceName(tenantID: number): string {
     return `service-pam-tenant-${tenantID}`;
   }
@@ -45,6 +48,7 @@ export class K8sTenantProvisioner extends K8sGeneral {
   private async createPAMAutoScaler(tenantID: number): Promise<void> {
     const { namespace } = this.options;
     const name = this.getPAMDeploymentName(tenantID);
+
     const config = this.createAutoScalerConfig(name);
     return this.createAutoScaler(namespace, config);
   }
@@ -82,10 +86,12 @@ export class K8sTenantProvisioner extends K8sGeneral {
     );
     return this.createDeployment(namespace, config);
   }
+
   private async createPAMService(tenantID: number): Promise<void> {
     const { namespace } = this.options;
     const name = this.getPAMServiceName(tenantID);
     const app = this.getPAMPodName(tenantID);
+
     const config = this.createServiceConfig(name, app, 8080);
     return this.createService(namespace, config);
   }
@@ -93,8 +99,9 @@ export class K8sTenantProvisioner extends K8sGeneral {
   private async createGuacdAutoScaler(tenantID: number): Promise<void> {
     const { namespace } = this.options;
     const name = this.getGuacdDeploymentName(tenantID);
-    const autoScaler = this.createAutoScalerConfig(name);
-    return this.createAutoScaler(namespace, autoScaler);
+
+    const config = this.createAutoScalerConfig(name);
+    return this.createAutoScaler(namespace, config);
   }
 
   private async createGuacdDeployment(tenantID: number): Promise<void> {
@@ -105,6 +112,7 @@ export class K8sTenantProvisioner extends K8sGeneral {
     const ports: K8sDeploymentPorts = [
       { containerPort: 4822, protocol: 'TCP' },
     ];
+
     const config = this.createDeploymentConfig(name, app, image, ports);
     return this.createDeployment(namespace, config);
   }
@@ -113,6 +121,7 @@ export class K8sTenantProvisioner extends K8sGeneral {
     const { namespace } = this.options;
     const name = this.getGuacdServiceName(tenantID);
     const app = this.getGuacdPodName(tenantID);
+
     const config = this.createServiceConfig(name, app, 4822);
     return this.createService(namespace, config);
   }
@@ -126,6 +135,7 @@ export class K8sTenantProvisioner extends K8sGeneral {
       let deploymentCreator: Function;
       let serviceName: string;
       let serviceCreator: Function;
+
       switch (type) {
         case 'PAM':
           autoScalerName = this.getPAMAutoScalerName(tenantID);

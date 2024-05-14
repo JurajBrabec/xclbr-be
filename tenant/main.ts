@@ -1,4 +1,4 @@
-import { OAuth2Options, OAuth2Token, getOAuth2Token } from './oauth2';
+import { OAuth2Options, getOAuth2Token } from './oauth2';
 import {
   K8sTenantProvisionerOptions,
   K8sTenantProvisioner,
@@ -13,21 +13,23 @@ const oAuth2Options: OAuth2Options = {
   clientSecret: 'client-secret',
 };
 
-getOAuth2Token(oAuth2Options)
-  .then((accessToken: OAuth2Token) => {
+async function main() {
+  try {
+    const accessToken = await getOAuth2Token(oAuth2Options);
     const tenantProvisionerOptions: K8sTenantProvisionerOptions = {
       url,
-      user: 'pato@xclbr.com',
+      user: 'juraj@xclbr.com',
       accessToken,
       namespace: 'excalibur-pam',
     };
     const provisioner = new K8sTenantProvisioner(tenantProvisionerOptions);
-    return provisioner.createTenant(tenantID);
-  })
-  .then(() => {
-    console.log('Success');
-  })
-  .catch((error) => {
+    const namespaces = await provisioner.listNamespaces();
+    console.log('Namespaces', namespaces);
+    //    await provisioner.createTenant(tenantID);
+  } catch (error) {
     console.error('Error', error);
     process.exit(1);
-  });
+  }
+}
+
+main();
